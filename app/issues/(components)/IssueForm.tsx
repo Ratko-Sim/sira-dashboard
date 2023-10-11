@@ -33,12 +33,14 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
   const onSubmit = handleSubmit(async (data: IssueFormData) => {
     try {
       setIsSubmitting(true);
+
       if (issue) {
         await axios.patch(`/api/issues/${issue.id}`, data);
       } else {
         await axios.post('/api/issues', data);
-        router.refresh();
       }
+
+      router.refresh();
       router.push('/issues');
     } catch (error) {
       setIsSubmitting(false);
