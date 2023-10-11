@@ -7,6 +7,7 @@ import IssueDetails from './IssueDetails';
 interface Props {
   params: { id: string };
 }
+
 export default async function IssueDetailPage({ params }: Props) {
   if (typeof params.id !== 'string') notFound();
 
