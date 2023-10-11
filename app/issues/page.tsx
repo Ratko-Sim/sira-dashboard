@@ -1,12 +1,39 @@
-
-import { Button } from "@radix-ui/themes";
+import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
+import prisma from "@/prisma/client";
 
+export default async function IssuesPage() {
+  const issues = await prisma.issue.findMany();
 
-export default function IssuesPage() {
   return (
-    <Button>
-      <Link href='/issues/new'>New Issue</Link>
-    </Button>
+    <div>
+      <div className="mb-5">
+      <Button>
+        <Link href='/issues/new'>New Issue</Link>
+      </Button>
+      </div>
+      
+      <Table.Root variant="surface">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">Author</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">Created At</Table.ColumnHeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {issues.map((issue) => (
+            <Table.Row key={issue.id}>
+              <Table.RowHeaderCell>
+                {issue.title}
+              <div className="block md:hidden">{issue.status}</div>
+              </Table.RowHeaderCell>
+              <Table.Cell className="hidden md:table-cell">{issue.status}</Table.Cell>
+              <Table.Cell className="hidden md:table-cell">{issue.createdAt.toDateString()}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+    </div>
   );
 }
