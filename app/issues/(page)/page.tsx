@@ -1,9 +1,10 @@
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
+import { Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
 import IssueActions from './IssueActions';
 import IssueTable, { IssueQuery, columnNames } from './IssueTable';
-import { Flex } from '@radix-ui/themes';
 
 interface Props {
   searchParams: IssueQuery;
@@ -50,3 +51,10 @@ export default async function IssuesPage({ searchParams }: Props) {
     </Flex>
   );
 }
+
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'sira. - Issues',
+  description: 'View all project issues',
+};
